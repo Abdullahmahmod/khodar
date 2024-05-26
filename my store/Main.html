@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title> Khodar </title>
+    <meta charset="UTF-8">
+    <meta name="describtion" content="2134354354354354">
+    <meta name="author" content="khodar store">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        h5 {
+            text-align: left;
+            padding: 1px 0;
+            margin: 0;
+            color: white;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        nav {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 14px 20px;
+            display: inline-block;
+        }
+
+        nav a:hover {
+            background-color: #555;
+        }
+
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+
+        .content {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px;
+        }
+
+        .side-menu {
+            background-color: #eee;
+            padding: 20px;
+            border-radius: 5px;
+        }
+
+        .side-menu h2 {
+            margin: 0 0 15px;
+        }
+
+        .products {
+            flex-grow: 1;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .product {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin: 10px;
+            padding: 15px;
+            width: 200px;
+            text-align: center;
+        }
+
+        .product img {
+            max-width: 100%;
+        }
+
+        .shopping-cart {
+            background-color: #eee;
+            padding: 20px;
+            border-radius: 5px;
+        }
+
+        .shopping-cart h2 {
+            margin: 0 0 15px;
+        }
+
+        #cart-items {
+            list-style: none;
+            padding: 0;
+        }
+
+        #cart-items li {
+            margin: 0 0 5px;
+        }
+
+        #cart-total {
+            font-weight: bold;
+        }
+    </style>
+
+    <script>
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        function addToCart(product) {
+            const productName = product.querySelector('h3').textContent;
+            const productPriceText = product.querySelector('.price').textContent;
+
+            // Remove any non-numeric characters from the price
+            const productPrice = parseFloat(productPriceText.replace(/[^\d.]/g, ''));
+
+            // Add the product to the cart array
+            cart.push({ name: productName, price: productPrice });
+
+            // Update the cart display
+            updateCart();
+
+            // Store the cart data in local storage
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
+
+        function updateCart() {
+            const cartItemsElement = document.getElementById('cart-items');
+            const cartTotalElement = document.getElementById('cart-total');
+
+            // Clear existing cart items
+            cartItemsElement.innerHTML = '';
+
+            // Display each item in the cart
+            cart.forEach(item => {
+                const cartItem = document.createElement('li');
+                cartItem.textContent = `${item.name}: $${item.price.toFixed(2)}`;
+                cartItemsElement.appendChild(cartItem);
+            });
+
+            // Update total
+            const cartTotal = cart.reduce((total, item) => total + item.price, 0);
+            cartTotalElement.textContent = `$${cartTotal.toFixed(2)}`;
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // Add event listeners to the products container
+            const productsContainer = document.querySelector('.products');
+            productsContainer.addEventListener('click', function (event) {
+                if (event.target.classList.contains('add-to-cart')) {
+                    // Traverse up the DOM to find the parent article element
+                    const productArticle = event.target.closest('.product');
+                    addToCart(productArticle);
+                }
+            });
+
+            // Initial update
+            updateCart();
+        });
+    </script>
+</head>
+
+<body>
+    <header>
+        <h1>khodar</h1>
+        <h5> <a href="login.html">log in </a> </h5>
+        <h5> <a href="register.html"> sign up </a> </h5>
+    </header>
+    <hr>
+    <nav>
+        <a href="khodar.html"> vegetable</a>
+        <a href="fruits.html">fruits</a>
+        <a href="grocary.html">grocary</a>
+        <a href="cart.html">shoping cart</a>
+    </nav>
+    <hr>
+
+    <h2>general product</h2>
+    <main>
+        <section class="products">
+            <article class="product">
+                <img src="2.jpg" alt="fruits img ">
+                <h3> fruits basket </h3>
+                <p> fruits for <br> breakfast </p>
+                <p class="price">$100eg</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </article>
+            <article class="product">
+                <img src="oil.jpg" alt="oil ">
+                <h3> oil </h3>
+                <p> oil for <br> cooking </p>
+                <p class="price">$70 eg</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </article>
+            <article class="product">
+                <img src="tomato.png" alt="tomatoes ">
+                <h3> tomatoes </h3>
+                <p> fresh tomatoes </p>
+                <p class="price">$15 eg</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </article>
+            <article class="product">
+                <img src="potato.jpg" alt="botatoes ">
+                <h3> botatoes </h3>
+                <p> botatoes firest class </p>
+                <p class="price">$20 eg</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </article>
+            <article class="product">
+                <img src="cucumber.jpg" alt="cocumbersm ">
+                <h3> cocumbersm </h3>
+                <p> fruits for <br> breakfast </p>
+                <p class="price">$15 eg</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </article>
+            <article class="product">
+                <img src="rice.jpg" alt="rice ">
+                <h3> rice </h3>
+                <p> fruits for <br> breakfast </p>
+                <p class="price">$100eg</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </article>
+            <article class="product">
+                <img src="strawberry.jpg" alt="strawberry ">
+                <h3> strawberry 1KG</h3>
+                <p> fruits for <br> breakfast </p>
+                <p class="price">$30 eg</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </article>
+            <article class="product">
+                <img src="makrona.jpg" alt="macaroni ">
+                <h3> macaroni </h3>
+                <p> fruits for <br> breakfast </p>
+                <p class="price">$7eg</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </article>
+            <article class="product">
+                <img src="cheese.png" alt="cheese img ">
+                <h3> rhodes cheder cheese </h3>
+                <p> fruits for <br> breakfast </p>
+                <p class="price">$100eg</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </article>
+            <article class="product">
+                <img src="onion.jpg" alt="onion img ">
+                <h3> onion </h3>
+                <p> fruits for <br> breakfast </p>
+                <p class="price">$25eg</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </article>
+            <article class="product">
+                <img src="eggplant.jpg" alt="eggplant img ">
+                <h3> eggplant </h3>
+                <p> fruits for <br> breakfast </p>
+                <p class="price">$100eg</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </article>
+            <article class="product">
+                <img src="guava.jpg" alt="guava img ">
+                <h3> guava 1kg </h3>
+                <p> fruits for <br> breakfast </p>
+                <p class="price">$15eg</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </article>
+            <article class="product">
+                <img src="1.jpg" alt="vegetables img ">
+                <h3> vegetables packeg </h3>
+                <p> contain 1kg onion & 1kg botatoes & 2kg tomatoes & 500gm filfil & 1kg cucumber</p>
+                <p class="price">$100eg</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </article>
+            <article class="product">
+                <img src="Banana-1-Kg.jpg" alt="Banana-1-Kg img ">
+                <h3> Banana-1-Kg </h3>
+                <p> fresh Banana</p>
+                <p class="price">20eg</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </article>
+            <article class="product">
+                <img src="meat 1kg.jpg" alt="meat img ">
+                <h3> meat 1kg </h3>
+                <p> fruits for <br> breakfast </p>
+                <p class="price">260eg</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </article>
+        </section>
+    </main>
+
+</body>
+<footer></footer>
+
+</html>
